@@ -1,1 +1,19 @@
-overview
+learning overview
+        1.the inner workings of cryptography promitives and how to correctly use them
+        2.how to reason about the security of cryptographic constructions  
+        3.how to apply this knowledge to real-world applications
+
+organization       
+       1.a detailed discussion of how two parties who have a shared secret key whene facing powerful adversary and tampers with traffic 
+       2.public-key techniques that let two parties generate a shared sercet key
+       
+homework and grading 
+        1.weekly problem and solve it within 8 hours 
+        2.the language of  programming assignments is no-limitation 
+        3.grade more than 80% is passing 
+        4.final exam(no midterm)
+        
+free resourse to supplement the lecture 
+      1.A course in applied cryptography and computational number theory
+      2. https://en.wikibooks.org/wiki/High_School_Mathematics_Extensions/Discrete_Probability
+      
