@@ -52,6 +52,55 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                     
 ---------------------------------------------------------------------------------------------------------------------------------------   
   
+  What is the cryptography
+    
+    crypto core 
+          1.sectet key establishment 
+          2.secure communication  confidentiality and integrity
+          
+   for example applications
+   1.digital signatures 
+           how to make sure the source of the document 
+     
+   2.anonymous communication(mix net ) 
+            want to talk  the doctor about the medical condition but don't want the doctor konw her name
+            
+   3.Anonymous digital cash
+        the problem is that Alice spent the cash only once ,nobody will know the Alice's identity,but Alice spend twice ,all of the 
+        a sudden her identity is completely exposed and then she could be subject to all sorts of legal problems 
+        
+   4.election  System  can compute the majority fo the votes but do it in such that nothing else is revealed about their individual votes 
+   
+   5.private autions  compute the winner of the highest bidder
+   
+   6.multi-party computation   6.1trusted authority 
+   
+   
+                               6.2without the authority talk to each other and get a value of the function
+   
+   
+   7.private outsourcing computation   Alice search query to google ,but google don't know who and what the query is 
+   
+   8. zero konwledge
+   
+   A rigorous science                             signature 
+   1.precisely specify thrreat model               unfogy
+   2.propose a construcion                          
+   3.prove that breaking construction under threat mode  will solve an underlying hard problem
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    
