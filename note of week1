@@ -17,3 +17,49 @@ free resourse to supplement the lecture
       1.A course in applied cryptography and computational number theory
       2. https://en.wikibooks.org/wiki/High_School_Mathematics_Extensions/Discrete_Probability
       
+      
+--------------------------------------------------------------------------------------------------------------------------------
+12.15
+       1.take notes
+       2.pause video frequently to think about the material
+       3.answer the questions by yourslef
+       
+  cryptography is everywhere
+security communication  
+1.1 web traffic  : http 访问者和服务器  ssl/Tls  goal： NO eavesdropping and no tampering
+     TLs is used to secure web traffic (secure Sockers Layer)
+   Two main parts 
+    A:Handshake Protocol: establish shated secret key using public-key cryptography
+    B:Recoed Layer:Transmit data using shared secret key.Ensure confidentiality and integrity
+ 
+ 
+1.2 wireless traffic: wpa2,GSM ,Bluetooth   
+   
+2. encrypting  files on disk   prevent the data form modifying and eavedropong  
+    
+3.content protection :  DVD css ; Blu-ray,AAcs
+ 
+4. user authentication
+
+single use key  email
+multi use key 
+
+cryptography is a tremendous tool and the bais for many security mechanisms 
+disadvatage:
+cryptography is not the solition to all security for example 1. software bug 2. society engineering attack
+             reliable unless implemented and used properly 
+             
+                    
+---------------------------------------------------------------------------------------------------------------------------------------   
+  
+   
+   
+   
+   
+   
+   
+   
+       
+       
+      
+      
