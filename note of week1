@@ -84,12 +84,38 @@ cryptography is not the solition to all security for example 1. software bug 2. 
    8. zero konwledge
    
    A rigorous science                             signature 
-   1.precisely specify thrreat model               unfogy
+   1.precisely specify threat model               unfogy
    2.propose a construcion                          
    3.prove that breaking construction under threat mode  will solve an underlying hard problem
    
    
+   -------------------------------------------------------------------------------------------------------------------------------------
    
+   
+   
+   The History of the cryptography
+           symmetric ciphers
+                             <The code breaker>
+                             
+   1. substitutuion cipher    
+      caesar cipher  shift by 3   a--->d  b--->e................
+         break: a: the key space is 26 factorial  but using the letter frequency is eaay to break it.
+                     e is about 12.7%    
+                     
+                 b:use  frequency of pairs of letters
+                     th    he 
+                     
+      vigene cipher  use the word as the key   add the key letters to the message letters ,modulo 26               
+                  a: assume the length of the key1.....n
+      
+      
+      Rotor Machines  
+                      most famous :the Enigma (3-5 rotors) 
+                      
+       Data encryption Standard    
+            DeS
+            
+            Today AES   Salsa20
    
    
    
