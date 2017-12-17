@@ -117,15 +117,51 @@ cryptography is not the solition to all security for example 1. software bug 2. 
             
             Today AES   Salsa20
    
+   -----------------------------------------------------------------------------------------------------------------------------------
+   
+   12.17
+    Discrete  probablity  离散概率 -----》(概率论) 
+      def : probability distribution P over U is a function P:U---->[0,1]
+        
+        1.Uniform distribution for all x属于U:p(x)=1/|u|
+        2.point distribution at X0: p(x0)=1,对于所有不等于x0的x，p(x)=0
+        
+     events
+         发生某项事件的概率 For a set A属于U，P[A]是事件x的概率 这个A称为事件
+         
+     The union bound
+         两个事件发生的概率小于等于两个时间发生概率之和
+         
+      Random variables  随机变量
+         Def: a random Variable X is a function  X:U--->V
+           
+         
+     The uniform random variable 
+         随机事件发生的概率 ，
+           1.deterministic algorithm:y<-----A(M)
+           2.randomized algorithm ： y<------A(m;r) where r<-----{0,1}的n次幂
+            r是一个隐式变量，每次进行一个随机算法会产生不同的output
+             
+   
+    independence:    p[AB]=P[A]P[B] 两个事件相互独立 
+    
+         -------》XOR 
+                  def：相同为0，不同为1 ，XOR has an important property 
+                  
+                  取两个相互独立的｛0，1｝的，一个是通过随机算法的得出·的，一个是符合均匀分布，结果相互异或， 将会得到一个均匀的随机变量
+   
+  proof 对于n=1 的时候 ｛0，1｝产生0的概率是p1,产生1的概率是p2，所以产生｛00｝和｛11｝的概率是
    
    
-   
-   
-   
-   
-   
-   
-   
+生日   悖论  the birthday paradox
+     Let r1,r2,...rn属于集合U，它们是相互独立的
+         Thm： when n=1.2*|U|根号次方 ，两个数相同的概率大于等于1/2,
+         U全体的空间
+         
+         
+         
+     
+     
    
    
    
