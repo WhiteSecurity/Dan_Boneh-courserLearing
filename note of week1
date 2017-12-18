@@ -159,7 +159,35 @@ cryptography is not the solition to all security for example 1. software bug 2. 
          U全体的空间
          
          
-         
+            -----------------------------------------------------------------------------------------------------------------------------
+    12.18
+     
+    One_Time_pad  一次一密    sth be careful when use the stream cipher密码流 使用明文和密钥进行一个字接一个字节的加密
+     
+    make one time pad partical by using a pseudo random generator  伪随机生成器 need unpredictable but hard to accomplish
+   
+   
+    E(k,m)=m异或G（k） ，D(k,c)=c异或G(k)
+    
+   1. if i use two time pad  is inscurity  should never use twice
+        c1=m1 xor PRG(k)
+        C2=m2 xor PRG(k)
+        C1 xor C2=m1 xor m2  finally get m1,m2
+        
+  Real world examples 
+       1.Project Venona 
+     generate a one time by throwing dice   
+      2.MS-PPTP 
+          point-to-point transfer protocol 
+  different key fot  c--->s and s----->c
+                       
+                    --------------                            -------------------   
+       client                          k(k s-->c,k c--->s)                              sever 
+       k(k s-->c,k c--->s)                                                         k(k s-->c,k c--->s)
+                    --------------                              ------------------        
+  
+  3.WIFI-communication 802.11b WEP
+  
      
      
    
