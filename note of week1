@@ -19,18 +19,7 @@ free resourse to supplement the lecture
       
       
 --------------------------------------------------------------------------------------------------------------------------------
-12.15
-       1.take notes
-       2.pause video frequently to think about the material
-       3.answer the questions by yourslef
-       
-  cryptography is everywhere
-security communication  
-1.1 web traffic  : http 访问者和服务器  ssl/Tls  goal： NO eavesdropping and no tampering
-     TLs is used to secure web traffic (secure Sockers Layer)
-   Two main parts 
-    A:Handshake Protocol: establish shated secret key using public-key cryptography
-    B:Recoed Layer:Transmit data using shared secret key.Ensure confidentiality and integrity
+12.15 lity and integrity
  
  
 1.2 wireless traffic: wpa2,GSM ,Bluetooth   
@@ -126,7 +115,7 @@ cryptography is not the solition to all security for example 1. software bug 2. 
         1.Uniform distribution for all x属于U:p(x)=1/|u|
         2.point distribution at X0: p(x0)=1,对于所有不等于x0的x，p(x)=0
         
-     events
+     events 
          发生某项事件的概率 For a set A属于U，P[A]是事件x的概率 这个A称为事件
          
      The union bound
@@ -160,12 +149,40 @@ cryptography is not the solition to all security for example 1. software bug 2. 
          
          
             -----------------------------------------------------------------------------------------------------------------------------
-    12.18
+    12.18   ,12.21 号补充
+    
+    def Symmetric Ciphers ：D(k,E(k,m))=m   对于所有m属于M，k属于Gx 来说
+    E is often output  randomized results  and D is always  output deterministic  result 
+    
+     why  the one-time-pad is  security?
      
-    One_Time_pad  一次一密    sth be careful when use the stream cipher密码流 使用明文和密钥进行一个字接一个字节的加密
+        def the security: 1. basic idea: CT should revel no "info" ablout PT
+                         Let's formulize,formally expalin what does information about the plain text actually mean
+                  
+                    Def
+                       对于所有的密文m0，m1属于密文空间M，and length of m0 and m1 is same,对于每个密文属于密文空间
+                       Pr[E(k,m0)=c]=Pr[E(k,m1)=c] k是从密钥空间K中随机选的
+                        我不能知道message是m0和m1对于所有的m0和m1
+                     proof: 
+                    对于所有的密文和密钥，通过密钥k来加密密文得到C的可能性是等于  从密钥空间中选出从可以把明文m加密成c的所有个数/密钥空间的大小
+                    
+                    如果从密钥空间中选出从可以把明文m加密成c的所有的个数是一个常数,那么称这个加密具有完美的保密性
+              
+              lemma： 对于OTP来说，从E(k,m)=c,c=m异或k，而k=m异或c，k具有唯一性，所以OTP是具有完美的保密性的
+              
+              证明了对于密文攻击，OTP是十分有效的
+                    
      
+     
+     One_Time_pad  一次一密    sth be careful when use the stream cipher密码流 使用明文和密钥进行一个字接一个字节的加密
+    
+    1.it is diffcult to use in practice( as long as the message and diffcult to generate the real random bit)
+    2.THm ，the number of the key must more or equal to the number of the bite of message
+    
+    
     make one time pad partical by using a pseudo random generator  伪随机生成器 need unpredictable but hard to accomplish
-   
+     
+     ------------------------------------------------------------------------------------------------------------------------------
    
     E(k,m)=m异或G（k） ，D(k,c)=c异或G(k)
     
@@ -187,8 +204,7 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                     --------------                              ------------------        
   
   3.WIFI-communication 802.11b WEP
-  
-     
+       
      
    
    
