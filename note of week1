@@ -178,12 +178,30 @@ cryptography is not the solition to all security for example 1. software bug 2. 
     
     1.it is diffcult to use in practice( as long as the message and diffcult to generate the real random bit)
     2.THm ，the number of the key must more or equal to the number of the bite of message
-    
-    
-    make one time pad partical by using a pseudo random generator  伪随机生成器 need unpredictable but hard to accomplish
+       
      
-     ------------------------------------------------------------------------------------------------------------------------------
    
+     ------------------------------------------------------------------------------------------------------------------------------
+   12.22
+   make one time pad partical by using a pseudo random generator  伪随机生成器 need unpredictable but hard to accomplish
+       pRG must be un-predictable
+          if one byte can be predicted ,the eavedropper may get the next the byte.At last,he will get all message.
+      算法A中我给出前缀的几个字节的输入，能够预测出接下来几个的输出， 的概率大于等于二分之一加上一个不可忽略的ε 
+      
+     Weak  PRGS 
+       r[0]=seed 
+        r[i]<----a*r[i-1]+b  mod p
+          output few bits of r[i]
+          
+     
+     
+     对于ε的def：
+         in practice :    ε>=1/2 30次方 称为不可忽略的， ε<=1/2 的80 次方称为可忽略的
+         in theroy  ：    ε大于一个多项式时间称为不可忽略的，ε小于所有多项式时间称为可忽略的
+          
+  ----------------------------------------------------------------------------------------------------------------------------------    
+       
+       
     E(k,m)=m异或G（k） ，D(k,c)=c异或G(k)
     
    1. if i use two time pad  is inscurity  should never use twice
