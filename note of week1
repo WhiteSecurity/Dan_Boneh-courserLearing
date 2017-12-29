@@ -144,7 +144,7 @@ cryptography is not the solition to all security for example 1. software bug 2. 
    
 生日   悖论  the birthday paradox
      Let r1,r2,...rn属于集合U，它们是相互独立的
-         Thm： when n=1.2*|U|根号次方 ，两个数相同的概率大于等于1/2,
+         Thm： when n=1.2*|U|根号次方 ，两个相同的概率大于等于1/2,
          U全体的空间
          
          
@@ -205,14 +205,14 @@ cryptography is not the solition to all security for example 1. software bug 2. 
     E(k,m)=m异或G（k） ，D(k,c)=c异或G(k)
     
    1. if i use two time pad  is inscurity  should never use twice
-        c1=m1 xor PRG(k)
-        C2=m2 xor PRG(k)
-        C1 xor C2=m1 xor m2  finally get m1,m2
+         c1=m1 xor PRG(k)
+         C2=m2 xor PRG(k)
+         C1 xor C2=m1 xor m2  because english has lots of redundancy finally get m1,m2
         
   Real world examples 
        1.Project Venona 
-     generate a one time by throwing dice   
-      2.MS-PPTP 
+     generate a one time by throwing dice  
+      2.Windoms NT MS-PPTP 
           point-to-point transfer protocol 
   different key fot  c--->s and s----->c
                        
@@ -220,10 +220,23 @@ cryptography is not the solition to all security for example 1. software bug 2. 
        client                          k(k s-->c,k c--->s)                              sever 
        k(k s-->c,k c--->s)                                                         k(k s-->c,k c--->s)
                     --------------                              ------------------        
-  
-  3.WIFI-communication 802.11b WEP
+  the really key is a pair of key ,one key is used to encrypt messages from server to client,
+                                         and one is uesd to encrypt messges form client to server
+                                         
+  3.WIFI-communication 802.11b 
        
-     
+    contains an encryption layer and the original encryption layer was called WEB 
+               
+                                           frame 
+               -------------------                          -----------------------
+  client secret key k                plain text M and CRC（M）                        sercret key k access point 
+                                          PRG(IV || key)
+                   the stream cipher is this concatenation of a calue IV and a long term key K 
+                   （change the stream cipher key by using the different IV to prepend the K）
+            IV is a 24 bit string when transfer a message to the access point it will change the IV every time
+      所以问题1：是IV只具有24bit的长度，所以它的所有的可能性是2的24次方，最坏情况下在2的24次方之后肯定会出现重复的现象，所以不安全
+          问题2:the basically idea   wanted to use  a different key for every packet 
+               -------------------                          ------------------------
    
    
    
