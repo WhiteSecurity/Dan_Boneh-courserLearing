@@ -235,11 +235,75 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                    （change the stream cipher key by using the different IV to prepend the K）
             IV is a 24 bit string when transfer a message to the access point it will change the IV every time
       所以问题1：是IV只具有24bit的长度，所以它的所有的可能性是2的24次方，最坏情况下在2的24次方之后肯定会出现重复的现象，所以不安全
+                  会出现 Two ——time——pad 
           问题2:the basically idea   wanted to use  a different key for every packet 
                -------------------                          ------------------------
    
    
+   12.29 补充WEP协议的劣势
+        问题二：PRG的算法是RC4，但是在Fluhrer,Mantin and Shamir发现，在10的六次方的使用的情况下，能重现secret key 
+        （because of the secret keys is so closely related） 
+        
+      improvement
+       1.使用三个合成的message 来扩大长度，避免相关的secret key，从而导致从密码的相关性来推出明文
+       ------》与其不断改变IV，不如改变PRG的值，使用多个明文和多个PRG key 来拓展密码的长度和避免相关性
+       
+       
+    4.another example ： disk encryption
+       the message is encrypted by block to block ，so the attack can analyse the change between the  different message.
+       so it's not secutity to use the two-time-pad in the disk encryption 
+        
+        summary
+          1.Network traffic :nogotiate new key for every session
+          2.Disk encruption: typocally do not use a stream cipher
+  
+  no integrity   
+      [  (m xor k) xor P ] xor k = x xor p 
+       so the attacker can change the message ,so it is no integrity. 
+       
+       比如在现实生活中，攻击者想要使信息的所有者从BOB 变成 eve 可以直接使用异或使得信息的所有者发生变化
+    
+    
+    stream cipher use in practice
+    1.RC 4（1987）通过循环迭代产生每次产生一个的byte，it fairly use in the procotol like Https and WeP
+     Two weakness :
+        1.RC 4 如果是完全的随机的话，在第二个字节出现是0的概率是不是1/256,而是2/256 ，如果你用RC 4 来加密数据，第二个字节可能完全没有被加密，它会被
+        0异或两倍的可能性，相较于它本应该的概率。在使用RC 4的时候应该使用Byte257 
+        2.出现00的概率是 1/256的2次方 +1/256的三次方 
+        3.related key attacks
+        
    
+   
+   
+   2.badly brokes stream cipher used for encryption DVD movies CSS
+   
+     
+     
+     
+     
+     
+     
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
    
    
    
