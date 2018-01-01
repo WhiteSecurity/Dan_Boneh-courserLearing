@@ -267,7 +267,7 @@ cryptography is not the solition to all security for example 1. software bug 2. 
     stream cipher use in practice
     1.RC 4（1987）通过循环迭代产生每次产生一个的byte，it fairly use in the procotol like Https and WeP
      Two weakness :
-        1.RC 4 如果是完全的随机的话，在第二个字节出现是0的概率是不是1/256,而是2/256 ，如果你用RC 4 来加密数据，第二个字节可能完全没有被加密，它会被
+        1.RC 4 如果是完全的随机的话，在第二个字节出现是0的概率不是1/256,而是2/256（出现偏差） ，如果你用RC 4 来加密数据，第二个字节可能完全没有被加密，它会被
         0异或两倍的可能性，相较于它本应该的概率。在使用RC 4的时候应该使用Byte257 
         2.出现00的概率是 1/256的2次方 +1/256的三次方 
         3.related key attacks
@@ -275,15 +275,47 @@ cryptography is not the solition to all security for example 1. software bug 2. 
    
    
    
-   2.badly brokes stream cipher used for encryption DVD movies CSS
-   
+   2.badly brokes stream cipher used for encryption DVD movies CSS（content scrambling system ）
+    hardware basiclly rely on the linear feedback shift register (线性反馈移位寄存器) lfsr
+    
+    the Lfsr use the certain cell which contains a bit doing xor operation,the result will become the first cell and the
+  last cell will fall off.
+  
+  DVD encryption use the two LFSRs
+  GSm use the A51/A52. three LFSRs 
+  Bluetooth E0:four LFSRs
+       
+     css  contains 5 bytes =40 bits
+     
+                               the first LFSR  1 || 2 Bytes  17 bits   ---8 cycle times outputs 8 bits
+     there are have two LFSR                                                                            +module 256 --1 bytes per round
+                              the second LFSR  1 || 3 Bytes. 25 bits   ---8 cycle times putputs 8 bits
      
      
+     easy to attack
+      First ，you get the CSS ,then assuming an the inital form the first LFSR in the 2的17次方‘s possibility ,using the CSS substract the 
+    the assuming number ,judging whether the result is correct.So you can get the correct sequence.
      
+     Modern stream cipher
      
+      eStream 
+       a seed{0,1}ｓ  and  a nonce -->{0,1}n. 其中n远大于s
+         nonce represent a unrepeatable  value for given key
+         
+         salsa 20
+         s=128/256      (n= 2 73 bits)max  a nonce {0,1} 64
+         
+         Salsa20(k;r)=H(k,(r,0))||H(k,(r,1))||.....
+         
+         how the H() works:
+                   
+         
+         
+         
+         
      
-     
-     
+       
+         
     
     
     
