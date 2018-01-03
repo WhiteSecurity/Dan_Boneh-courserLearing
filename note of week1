@@ -321,6 +321,35 @@ cryptography is not the solition to all security for example 1. software bug 2. 
         In pratice :
            the PC4 runs  slowest and the salsa 20 run 643Mb/sec and the sosemanuk 727 MB/sec
            
+           
+        The defination of the PRG :
+           1. what is the mean for the output of the generator to be indistinguishable from random ?
+           2. choosing a random key in the keyspace output G(k)  .we say the distribution of the pseudo random strings is indistringushable from
+            a truly uniform distribution,
+            
+            the really uniform distribution can output any of these strings with equal probability ,judge the pseudo random generator can generate
+            the indistinguishable strings from the really uniform distribution
+            
+            
+            how to define this concept of indistinguishability form random ,we need the concept of a statistical test.
+             使用一个算法来判断一个nbit的输入是否是一个随机的值
+                第一个是根据输入值中的0-1 比应该在某个范围之内，不应该太过于离谱
+                第二个是输入值 00这个String的概率也应该在合理的范围之内
+                
+                第三：0 块最大长度 出现的概率
+                
+           
+           
+           how do we evaluate whether a statistical test is good or not? So we need the concept of the advantage.
+             we define the generator and a statistical tests 
+             
+             Adv of this generator denoted the advantage sub PRG 
+             
+                the advantage of the statistical test A relative to the generator g
+                
+      
+           
+           
                    
          
          
