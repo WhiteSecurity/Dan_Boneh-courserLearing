@@ -321,8 +321,9 @@ cryptography is not the solition to all security for example 1. software bug 2. 
         In pratice :
            the PC4 runs  slowest and the salsa 20 run 643Mb/sec and the sosemanuk 727 MB/sec
            
-           
-        The defination of the PRG :
+  ------------------------------------------------------------------------------------------------------------------------------------
+  1月3号
+       1. The defination of the PRG :
            1. what is the mean for the output of the generator to be indistinguishable from random ?
            2. choosing a random key in the keyspace output G(k)  .we say the distribution of the pseudo random strings is indistringushable from
             a truly uniform distribution,
@@ -340,7 +341,7 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                 
            
            
-           how do we evaluate whether a statistical test is good or not? So we need the concept of the advantage.
+           2.how do we evaluate whether a statistical test is good or not? So we need the concept of the advantage.
              we define the generator and a statistical tests 
              
              Adv of this generator denoted the advantage sub PRG 
@@ -348,12 +349,68 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                 the advantage of the statistical test A relative to the generator g
                 
       
-           
-           
+           Adv(prg)[A,G]=|Pr[A(G(k))=1] - Pr[A(r)=1]| 结果在0-1之间
+           其中k是从K中随机选取的，r真正的随机数
+            
+          如果这个advantage is close 1 ，it means the pseudo random strings  is distinguishable with the turely random
+           constract to close to the 0,
                    
          
          
+         3.what os a secure pseudo-random generator
+           we say the generator G is secure if the statistical tests can distiguish its output form the random
+           
+           for the efficient statistical tests, Adv(prg)[A,G] 's result is negligible,so the G is secure.
+           
+           
+           4.can we construct the  generaor and proof the secure of the generator
+                 none 
+           A secure PRG is unpredictable
+            让我们设计统计测试B，B(x)是给你前面i个bit，能够预测第i+1个比特 输出1 如果不能预测则输出0
+            
+           如果对于真正的随机生成算法，测试B得到1的概率是1/2
+             如果对于伪随机生成序列，测试B得到1的概率 大于等于 1/2 加上 一个epislon
+             
+             所以Adv(PRG)[B,G] 大于 epision 
+           
+           Y thm an unpredictable PRG is secure .
+             
+             if next-bit predictors distinguish G from random then no statistical text can .
+             
+             
+             More generally 
+             def: conputionally indistinguishable between P1 and P2  ,P1 and P2 are two distributions over (0,1)n
+             
+               我们的定义和上面的类似
+               对于所有有效的 统计测试 A  在伪随机生成器q1和q2中，如果A对于他们两个生成为1的概率相减是一个可忽略的数 那么称P1和P2是计算上
+               不可区分的
+               
+               -------------------------------------------------------------------------------------------------------------------
+               
+         一月四号   
          
+         
+         
+         
+         
+         
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+             
+               
+             
          
      
        
