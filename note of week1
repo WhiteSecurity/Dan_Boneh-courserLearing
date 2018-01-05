@@ -387,7 +387,30 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                
                -------------------------------------------------------------------------------------------------------------------
                
-         一月四号   
+         一月五号
+         1.  what is mean for  a stream safer toe be secure?  
+            so first,we difine the attack's abilities : obtian the one ciphertext.
+              the security requirements: attacker can't recover secret key
+                                          attacker can't recover all plaintext
+         
+     stronnest one:    shannon's idea :defination of  perfect security CT should reveal no 'info' about PT
+                      we choose the m0,m1 from the M ,the length of m0 and m1 is same.
+                     (E,D) has perfect secrecy 
+                       the attacker can't distinguish the E(k,m1) and the E(k,m0) where k<-k======E(k,m1)=E(k,m0)
+                      the difination of security is too strong ,means it require really long keys.
+       
+       Weaken one:  E(k,m1) ≈ E(k,m0)  computional indistinguish
+                        
+              
+          2.define the Semantic Security (one-time key)
+         for b=0,1 ,define experiments EXP(0) and EXP(1) as: 
+         A adver   similier to the statical test (pesudo random generators)
+           
+         
+         
+         
+         
+         
          
          
          
