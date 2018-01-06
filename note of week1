@@ -379,8 +379,7 @@ cryptography is not the solition to all security for example 1. software bug 2. 
              
              
              More generally 
-             def: conputionally indistinguishable between P1 and P2  ,P1 and P2 are two distributions over (0,1)n
-             
+             def: conputionally indistinguishable between P1 and P2  ,P1 and P2 are two distributions over (0,1)n                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                我们的定义和上面的类似
                对于所有有效的 统计测试 A  在伪随机生成器q1和q2中，如果A对于他们两个生成为1的概率相减是一个可忽略的数 那么称P1和P2是计算上
                不可区分的
@@ -403,8 +402,68 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                         
               
           2.define the Semantic Security (one-time key)
+          give the attack a cipher 
          for b=0,1 ,define experiments EXP(0) and EXP(1) as: 
-         A adver   similier to the statical test (pesudo random generators)
+        A adver   similier to the statical test of the pesudo random generators
+        challengers ,one case inputs bits set to zero and the other case takes his inputs bits set to one 
+           use a pair of messages M0 and M1 sending to challengers ,then the challengers reture the the c<-E(k,Mb),so inexperiment 0 the 
+        challenger will output the encryption of M0 ,in experiment 1 the challlenger will output the encryption 1.
+            A can't distingusish the b is 0 or 1.
+            
+           Notation:event Wb means a experiment B the adversary output 1 (advantage)
+             in two experiments,if the adversary outputs 1 with same probaliti;y ,means the adv can't distinguish two expriment
+             however, the adversary is able to outptut 1 in one experiment with significantly different probability than in other experiment
+              mean the adv is easy to distinguish two expriment.
+           So we def : Advss[A,E]=|Pr[W0]-Pr[w1]| ,if the result is close to the 0 ,the adv  can't distinguish two expriment ,however, the adv
+            can distinguish two expreiment.
+              
+              
+              
+        Def: E is semantically secure if for all efficient A 
+                    the Advss[A,E] is negligible ≈ for all explicit m0 and m1 ,E(k,m1) ≈ E(k,m0) .
+                    
+         1. for cipher is semantically secure then no bit of information is revealed to an efficient adversary .
+         2.OTP is  semantically secure
+         
+         
+         
+         
+         ----------------------------------------------------------------------------------------------------------------------------
+         1月6号
+          how to defin the PRG　is secure?  
+          
+          对于所有的语义安全的攻击者A， 建立一个PRG 攻击者B 满足 Adv ss[A,E]<=2*Adv prg[B,G]
+       
+          the challenger starts choosing k<-K ,the adversary output two messages M)=0,M=1; the challenger encrypt them and output one of them.
+           
+           in the case ,we use the really key to replace the pseudo random generator ,and encrypt the message.
+          
+          logical proof
+         1. Because of the pseudo random generator is semantically secure ,so the adversary can't indistinguish from the turely random .
+          2.Because of the OTP is secure unconditionally secure, so the adversary can't win the random game.
+                |Pr[R0]-Pr[R1]| =  Advss(A,OTP) = 0 
+          3.At last,he could't win the pseudo random generator.So the stream cipher is secure.
+          rigorously proof:
+           1.G(k) pseudo random generator  2.Wb the event that b'=1 ,W0 represents outputting 1 when receiving the encryption of M0 
+         
+           
+                       
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+           
            
          
          
