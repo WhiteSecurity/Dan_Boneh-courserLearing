@@ -1,1 +1,78 @@
+2018.1.12
 
+1.What is block cipher?How use the block cipher correctly?
+   DES and AES main idea : key k expansion to k1 and use the k1 encrypt the  message,get m1 called a round.
+     
+                                  key k expansion to k2 and use the k2 encrypt the message,get m2 called second round.
+              next and next so on.......  get the cipher C.
+              
+2.Pseudo Random function（PRF）define over(k,x,y)keyspace,inputspace and outputspace.  F: K x X->Y
+  such that exists "efficient " algorithm to evaluate F(k,x) 
+
+  Pseudo Random Permutation (PRP) defined over(k,x) keyspace and a set X   K x X->X  伪随机置换 input one X and output another X
+     the function k is one to one and exist a efficient inversion algorithm D(k,y)
+    
+ Example PRPs: 3DES ,AES...
+   
+   Functionally any PRP is also a PRF   if a PRP is a PRF where X=Y and is efficiently invertible.
+  
+ Secure PRFs
+   Let f:k X x ->Y be a PRF 
+       Fun[x,y] :the set of all functions from X to Y   Size ：Y绝对值 的X 绝对值 次方 （可以替换成各种 比如一对一的伪随机置换映射）
+       Sf={F(k,*) s*t, k属于 K} 属于 Funs[X,Y] 所有的使用key k的从X到Y的Fun   Size：密钥的空间K
+       
+ 如果我们说一个PRF是安全的，主要是因为一个随机的funs[x,y] 是不可区分的 a pseudo-ranom function in Sf
+ 
+ more preciously （我们所要建立的伪随机产生器所要满足的安全条件）
+   a adversary who trying to indistinguish truly rendom function from a preudo-randonm function .First choose a truly random function 
+   from the Fun[x,y]  and choose a random key for a pseudo-random function .A adversary submit points in X,a bunch of Xs like x1,x2,,,
+   我们会返回给他随机的可能用真正随机公式加密选择的k的或者伪随机公式公式选择的k加密，如果这个poor adversary 不能够区分，那么这个这个PRFs是一个安全的
+   
+   
+   
+   不能够提供帮助就闭嘴 shut up
+   
+   An easy application：
+     PRF=> PRG
+       let F 成为一个安全地伪随机公式 产生一个K
+       the G 成为一个 n个比特的t个块的 key  G（K）=F（k,0）||F(k,1)||F（k,2）||F（k,3）||...F（k,t） 平行独立结构 size:nt
+                                            is indistinguish from the turely random gererator 
+                                                G（K）=F（0）||F(1)||F（2）||F（3）||...F（t） 互不相护影响
+                                                
+                                                
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+         
+       
+       
+       
+       
+       
+       
+       
+       
+              
+       
+             
+      
+    
