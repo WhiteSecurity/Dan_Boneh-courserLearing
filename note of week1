@@ -21,22 +21,31 @@ free resourse to supplement the lecture
 --------------------------------------------------------------------------------------------------------------------------------
 12.15 lity and integrity
  
+secure communication
+
+1.1 Web traffic: Https
+ secure stockt layer: SSL 用于数据传输之前，通信双方进行身份认证，协商加密算法和交换加密密钥。
+  two main parts:
+   1.  handshake protocol establish a shared secure key using public -key protocol
+   2. transmitting data using shared secret key
  
 1.2 wireless traffic: wpa2,GSM ,Bluetooth   
    
 2. encrypting  files on disk   prevent the data form modifying and eavedropong  
     
-3.content protection :  DVD css ; Blu-ray,AAcs
+3.content protection :  DVD css(Content Scrambling System) 内容扰乱系统; Blu-ray,AAcs
  
 4. user authentication
 
-single use key  email
-multi use key 
+single use key  email   one-time-one-key
+multi use key    key is used to encrypt many messages 
+                encrypt the file :same key is used to encrypt many files 
+                need more mechinary to keep security
 
 cryptography is a tremendous tool and the bais for many security mechanisms 
 disadvatage:
 cryptography is not the solition to all security for example 1. software bug 2. society engineering attack
-             reliable unless implemented and used properly 
+             reliable unless implemented and used properly 使用正确
              
                     
 ---------------------------------------------------------------------------------------------------------------------------------------   
@@ -49,18 +58,20 @@ cryptography is not the solition to all security for example 1. software bug 2. 
           
    for example applications
    1.digital signatures 
+   在日常的生活中我们常使用同一个签名来签署文件，但是在电子文件中却不适用，因为attack可以复制签名，所以不同的文件要使用不同的签名，但是私钥不需要发生改变
            how to make sure the source of the document 
      
    2.anonymous communication(mix net ) 
             want to talk  the doctor about the medical condition but don't want the doctor konw her name
             
-   3.Anonymous digital cash
+   3.Anonymous digital cash（匿名性和 防止双花问题在一定的程度上具有冲突性）
         the problem is that Alice spent the cash only once ,nobody will know the Alice's identity,but Alice spend twice ,all of the 
         a sudden her identity is completely exposed and then she could be subject to all sorts of legal problems 
         
    4.election  System  can compute the majority fo the votes but do it in such that nothing else is revealed about their individual votes 
    
    5.private autions  compute the winner of the highest bidder
+                                Thm：anything the can done with the trusted authi, can also be done without.
    
    6.multi-party computation   6.1trusted authority 
    
@@ -70,13 +81,15 @@ cryptography is not the solition to all security for example 1. software bug 2. 
    
    7.private outsourcing computation   Alice search query to google ,but google don't know who and what the query is 
    
-   8. zero konwledge
+   8. zero konwledge  Alice 想要向 Bob 证明 他有一个N，只要Alice向Bob证明他拥有N的因式分解的solution，Bob就会相信Alice的Knowledge
    
    A rigorous science                             signature 
    1.precisely specify threat model               unfogy
    2.propose a construcion                          
    3.prove that breaking construction under threat mode  will solve an underlying hard problem
-   
+   首先定义一个精确特定的模型，比如一个签名是不可伪造的，攻击者能够做什么，不能够做什么，（在假设条件下）
+   在这个模型下我们证明任意攻击者可以攻击这个模型，我们也假设攻击者能够解决某些困难性问题来攻破这个模型，但是实际上这个困难性问题是难解的，所以
+   证明没有任何攻击者能够攻击这个模型在我们的假设条件下
    
    -------------------------------------------------------------------------------------------------------------------------------------
    
