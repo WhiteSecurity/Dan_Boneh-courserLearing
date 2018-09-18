@@ -101,18 +101,19 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                              
    1. substitutuion cipher    
       caesar cipher  shift by 3   a--->d  b--->e................
-         break: a: the key space is 26 factorial  but using the letter frequency is eaay to break it.
+         break: a: the key space is 26 factorial（26的阶乘）  but using the letter frequency is eaay to break it.
                      e is about 12.7%    
                      
                  b:use  frequency of pairs of letters
                      th    he 
                      
       vigene cipher  use the word as the key   add the key letters to the message letters ,modulo 26               
-                  a: assume the length of the key1.....n
-      
+                  a: 1.assume the length of the key  1.....n so on and so forth
+                     2.假设明文单词从E开始往下一个个检验算，计算出key的每个单词，把密文减去key就能够得到明文，一个个检验必能得到一组有意义的明文
       
       Rotor Machines  
-                      most famous :the Enigma (3-5 rotors) 
+                      每个转轮是一个不同的映射关系，每次输入一个字母，转轮机就会顺序旋转一次，
+                      most famous :the Enigma (3-5 rotors) 更加复杂
                       
        Data encryption Standard    
             DeS
