@@ -164,6 +164,7 @@ cryptography is not the solition to all security for example 1. software bug 2. 
          
             -----------------------------------------------------------------------------------------------------------------------------
     12.18   ,12.21 号补充
+    consistent 连续的一致的
     
     def Symmetric Ciphers ：D(k,E(k,m))=m   对于所有m属于M，k属于Gx 来说
     E is often output  randomized results  and D is always  output deterministic  result 
@@ -180,11 +181,13 @@ cryptography is not the solition to all security for example 1. software bug 2. 
                      proof: 
                     对于所有的密文和密钥，通过密钥k来加密密文得到C的可能性是等于  从密钥空间中选出从可以把明文m加密成c的所有个数/密钥空间的大小
                     
-                    如果从密钥空间中选出从可以把明文m加密成c的所有的个数是一个常数,那么称这个加密具有完美的保密性
+                    如果从密钥空间中选出从可以把明文m加密成c的所有的个数是一个常数,那么称这个加密具有完美的保密性（perfect secrecy）
+          
               
               lemma： 对于OTP来说，从E(k,m)=c,c=m异或k，而k=m异或c，k具有唯一性，所以OTP是具有完美的保密性的
               
               证明了对于密文攻击，OTP是十分有效的
+              bad news: 密钥的空间要大于明文空间，才能保证完美的保密性
                     
      
      
