@@ -233,10 +233,10 @@ cryptography is not the solition to all security for example 1. software bug 2. 
           point-to-point transfer protocol 
   different key fot  c--->s and s----->c
                        
-                    --------------                            -------------------   
+                    -------------->m1                         s1<-------------------   
        client                          k(k s-->c,k c--->s)                              sever 
        k(k s-->c,k c--->s)                                                         k(k s-->c,k c--->s)
-                    --------------                              ------------------        
+                    -------------->m2                         s2<------------------        
   the really key is a pair of key ,one key is used to encrypt messages from server to client,
                                          and one is uesd to encrypt messges form client to server
                                          
