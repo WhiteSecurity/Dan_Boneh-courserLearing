@@ -40,15 +40,42 @@
                                                 G（K）=F（0）||F(1)||F（2）||F（3）||...F（t） 互不相护影响
                                                 
                                                 
+    ------------------------------------------------------------------------------------------------------------------------------------------
+    
+    2018年9月25号
+    
+   对于DES的穷举攻击--exhaustive attack 
+    goal:give a few input and output pairs(mi,ci=(k,mi)),k=1,2,3,find key k;
+    
+    Lemma：Suppose DES is a idea cipher.
+             对于所有的m和c，至多有一个k的概率是c=DES(k,m)
+    Proof:   with the possibility is 1/256
+    pr[存在k不等于k'，c=des(k,m)=(k',m)]<=对于2^56的和 pr[des(k,m)=(k',m)]<2^56*1/2^64=1/256
+    
+    对于两个不同的（m1,c1）,(m2,c2)来说的话，唯一的概率是1-1/2^71
+    
+    对于两个不同的输入输出对来说，AES-128 唯一k的概率是1-1/2^128
+    
+    two pair input/output is enough for exhaustive attack
+    
+  DES从一开始三个月长的破解期到22hour的破解期，目前发展的三重DES成为NIST的标准
+     C=e(d(e(m,k1),k2),k3) , 为什么不使用 eee，在k1=k2=k3的时候可以使得3trible DES变成 DES
+     
+     why not use double-DES
+     
+        
+ middle attack 
+      m  ----  (k1,) --x---   (k2,) ---- c 
+                                                
+        1.首先做个映射表，k1的所有的可能是2^56,反向从c开始有另外一个k2的所有的可能是2^56
+        2.还有一个排序的时间是time=log_2(2^56)+log_2(2^56)=2^63<<2^112次方 ，且小于2^90
        
        
        
        
+        m  ----  (k1,) --x---   (k2,) ------(k3,)---- c 
        
-       
-       
-       
-       
+      time log_2(2^56) + 2^63=2^118
        
        
        
