@@ -78,7 +78,28 @@
       time log_2(2^56) + 2^63=2^118
        
        
-       
+---------------------------------------------------------------------------------------------------
+
+2018年9月26号
+
+AES
+
+2000年，NIST采用Rijnael 作为AES的标准
+
+密钥的大小：128，192，256 bits.   Block size:128 bits 密钥长度越短加密效率越高
+
+   代换排列  substitution-permutation 并不是festial 结构，所以每次在与k异或的时候就要使的所有的bit位发生改变，而
+   festital network的话是有一半的bit不会发生改变
+
+               经过代换layer          经过代换layer
+input 异或 k1 -------------> 异或 k2  -------------> 。。。。。。。。。异或kn --->output
+所有的k1，k2.....k3组成一个k的集合
+
+首先input包含一个4x4的矩阵 ，经过 substitution layer有三层1.bytesub 2.shiftrow 3.mixcloumn.
+
+
+
+
    
    
    
