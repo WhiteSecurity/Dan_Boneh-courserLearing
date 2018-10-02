@@ -130,6 +130,60 @@ EBC并不是语意安全的。
 ----------------------------------------------------------------------------------------
 在块加密中使用同一个密钥加密多条信息
 
+应用的例子：
+  1.文件系统：相同的AES密钥被使用来加密许多文件
+  2.IPsec：相同的AES密钥被用来加密许多包
+  
+  首先我们定义：什么是语意安全的对于多次密钥来说
+   key used more than once  =>  adversary sees manys CTs with same key
+   
+   so the adversary's power: chosen-plaintext attack(CPA) 选择明文攻击（知晓明文和对应的密文的攻击）
+    * Can obtain the encryption of arbitrary messages of his choice
+       这是在现实生活中的保守模型
+    *攻击者的目的是：破坏语意的安全性
+    
+    实验EXP（b）,攻击者使用m_1_0和m_1_1发送给挑战者，挑战者把加密后的信息发送给
+    攻击者，攻击者来判断是m_1_0被加密了还是m_1_1被加密了
+       然后在选择明文攻击中，攻击者可以重复质询1，，，q次 m_i_0，m_i_1
+    重复多次质询（假设可以质询q次），攻击者可以记住每一对的问询值和反馈值主要的目的是弄清楚
+    是实验0还是实验1.
+    所以我们定义语意安全是：Adv_cpa[A,E]=|Pr[EXP(0)=1]-Pr[EXP(1)=1]| 是一个可忽略的概率
+    
+     在标准的语意安全对局中，攻击者可以有选择性的依次发送查询，选择如下的攻击方式，攻击者
+     可以轻易攻破语意安全
+       攻击者可以知道特定的明文被加密之后的密文，通过传送两个相同的明文，
+       之后再通过质询一个和之前相同的明文和一个不同的来进行有效的区分，所以
+       用同一个密钥来加密多次在选择明文攻击下是不安全的。
+       
+       在现实中的含义是，如果在加密中给予两个相同的明文那么密文便是相同的，这是攻击者不应该知道的事情
+       所以如果我们要使得密钥被使用多次，----那么当被给的明文两次时，加密产生的必须有两个不同的输出。
+       
+       How？
+         1.randomized encryption 
+           encryption same msg twice gives different ciphertexts
+           ciphertext muset be longer that plaintext 
+               Roughly speaking: CT- size= PT-size +"#random bits"
+               如果明文非常大的话，那么加上随机的比特空间也不会有太大的改变，
+               如果明文相对来说比较小的话，就会引入额外的开销，
+               并且random bits 在密文空间中要是不可以区分的，及R要足够的大，使得r永远不会重复
+          2.nonce-based encryption
+            nonce n: a value that changes from msg to msg.
+                (k,n) 对只能使用一次，never used more that once
+                
+           methon1: nonce is a counter(e.g. packet counter)
+           在网络协议中把nonce当作数据包的计数器， 每次发送增加1
+                 ---used when encryptor keeps state form msg to msg
+                 ---if decryptor has same state,need not send nonce with CT
+                (k,n) 对只能使用一次，never used more that once
+       因为接受者和
+                
+               
+       
+       
+    
+    
+    
+  
    
 
 
