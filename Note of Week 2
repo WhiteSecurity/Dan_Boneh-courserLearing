@@ -175,10 +175,33 @@ EBC并不是语意安全的。
                  ---used when encryptor keeps state form msg to msg
                  ---if decryptor has same state,need not send nonce with CT
                 (k,n) 对只能使用一次，never used more that once
-       因为接受者和
-                
-               
+       因为接受者和发送者同时维护一个同步的计数器，所以就没有必要把CT带着nonce一起发送，因为nonce对于
+       双方来说都是不言而喻的
        
+       但是对于其他的协议比如：IPSec protocol，这是一种被用于加密IP层的协议，他会调换数据包的顺序，就要把
+       nonce值包含在ct中发送给接受者
+       
+           methons2: encryptor chooses a random nonce, n <-N
+           假设nonce的空间足够的大，就能某个密钥使用期间nonce不会重复，如果在许多不同的设备之间且具有相同的
+           key，这种不需要维护的nonce值是非常有效的
+                
+             基于nonce加密饿CPA安全性，系统应该是安全的当nonce被攻击者选择的时候
+             因为攻击者能够选择他想要攻击的密文，但是即使ALice被欺骗，但是ALIce会永远使用不同的nonce值进行加密
+                        
+                        for i=1,...,q: n_i and m_(i,0),m_(i,1):|m_(i,0)|=|m_(i,1)|
+                        <---------------------------------------------------------         
+             challengor                                                                 adversary 
+                        ---------------------------------------------------------->      
+                     
+                                   c<- E(k,m_(i,b),n_i)
+              但是所有的ALL nonces must be distinct
+              
+              攻击者能够区分的概率是可忽略的
+              
+              ------------------------------------------------------------------------------------------
+              
+                                   
+                                   
        
     
     
