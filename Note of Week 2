@@ -200,16 +200,36 @@ EBC并不是语意安全的。
               
               ------------------------------------------------------------------------------------------
               
-                                   
-                                   
-       
+Mode of operation:One time key cbc（cipher-blcok chain）
+                  
+                             mo                m1              m2...............m_n
+                             |                 |                                 |
+                             |                 |
+    IV(initional vector)  --xor      ________ xor
+                             |      |          |
+                             |      |          |
+                             |      |          |
+                           E(k,)    |        E(k,)
+                             |      |          |
+                             |------           |
+   IV                       c0                c1,,,,,,,,,,,,, c2   ,,,,,,          cn
+   |                         |                 |
+   |                         |                 |
+   |                       D(k,)             D(k,)
+   |                         |                 |
+   |                         |                 |
+    -------------------     m0                 m1.................................m_n
     
-    
+analyse CPA-security in cbc:
+  if E is a secure PRP over(k,x) then
+  then E_cbc is sem.sec. under CPA over (k,x^l,x^l+1) input spaceX中l长的比特， output space X中的l+1个字节
+  
+  In particular, there is a q-quaries adversary A attacking E_cbc
+  there exists a PRP adversary B s,t:
+    Adv_CPA[A,E]<=2*Adv_PRP[B,E]+2*q^2*L^2/|x|
+    只有当q^2*L^2 远小于x的时候才会使得CBC是安全的，在现实生活中q是我们使用密钥k来对明文加密的次数，x就是密文空间，l是分组的长度
     
   
-   
-
-
 
 
 
