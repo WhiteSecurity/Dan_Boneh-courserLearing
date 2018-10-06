@@ -200,7 +200,7 @@ EBC并不是语意安全的。
               
               ------------------------------------------------------------------------------------------
               
-Mode of operation:One time key cbc（cipher-blcok chain）
+Mode of operation:One time key cbc（cipher-blcok chain） 一个密钥进行多次加密的模式第一种CBC
                   
                              mo                m1              m2...............m_n
                              |                 |                                 |
@@ -229,14 +229,56 @@ analyse CPA-security in cbc:
     Adv_CPA[A,E]<=2*Adv_PRP[B,E]+2*q^2*L^2/|x|
     只有当q^2*L^2 远小于x的时候才会使得CBC是安全的，在现实生活中q是我们使用密钥k来对明文加密的次数，x就是密文空间，l是分组的长度
     
+  warning：一个对于CBC的 ran.IV的攻击
+      如果当攻击者能够预测IV的时候，那么CBC就是不安全的
+      假设challenger给攻击者和一个密文 C，那么，攻击者能够从C中预测出IV
+      
+               攻击者首先发送 x=0给挑战者，挑战者会response 一个C=[IV1,E(k,IV1 xor 0)] 给挑战者  =>CPA质询
+               之后攻击者会执行 sementic security challenge
+               
+               发送一个 m0 = IV xor IV1给用户，如果预测成功那么c11=c1，如果预测不成功那么C11不等于c1
+               
+     solution：1.
+         nonce-based CBC
+         Cipher Blockchain with unique nonce
+         使用一个（k1，k）的密钥对来分别加密 IV 和明文块，让其变得不可预测,使得密文的长度等于明文的长度，IV并不经过传输
+         
+      void AES_cbc_encrypt(
+        constant unsigned char *in,
+        unsigned char *out,
+        size_t length,
+        constant AES_Key *key,
+        unsigned cahr *ivec, (user supplies IV but don't encrypt it and use it directly)
+        AES_encrypt and AES_decrypt
+      );  SSL协议
+      
+      2. padding 
+      在最后一个块中加入一个 padding ，使得明文的长度大于密文的长度，
+      当解密的时候remove这个padding
+      TSL协议，不再最后一个快上添加padding而是添加一个dummy block
+      
   
+   一个密钥进行多次加密的第二种模式：randomize counter mode
+   F是一个不可逆的安全的伪随机函数
+ IV     m0         m1          m2        m3       ........
+      F(k,IV)   F(k,IV1)   F(k,IV2)   F(k,IV3)    ........
 
+IV      C0         C1          C2        C3
 
+是并行处理，如果有三个AES engins ，那么处理的速度是三倍，并不是和CBC一样是按顺序处理
 
+但是IV并不是真正随机的，IV是一个128bits的块，这个块中有
+                                      
+                                      64位的nonce-----64位的counter
+所以加密的块不能超过2^64 个块，不然他们可能会遇到相同的key
 
-
-
-
+if F is a secure PRP over(k,x) then
+  
+  
+  In particular, there is a q-quaries adversary A attacking E_ctr
+  there exists a PRP adversary B s,t:
+    Adv_CTR[A,E]<=2*Adv_PRP[B,E]+2*q * L^2/|x|
+    只有当q *L^2 远小于x的时候才会使得CBC是安全的，在现实生活中q是我们使用密钥k来对明文加密的次数，x就是密文空间，l是分组的长度
 
 
 
