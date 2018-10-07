@@ -273,20 +273,42 @@ IV      C0         C1          C2        C3
                                       64位的nonce-----64位的counter
 所以加密的块不能超过2^64 个块，不然他们可能会遇到相同的key
 
-if F is a secure PRP over(k,x，x) then
+if F is a secure PRF over(k,x，x) then
   E_ctr is a semantic security usder CPA  over(k,X^l,X^L+1)
   
   In particular, there is a q-quaries adversary A attacking E_ctr----->映射现实生活中的加密者对于明文的加密次数
   there exists a PRP adversary B s,t:
     Adv_CTR[A,E]<=2*Adv_PRP[B,E]+2* q^2 * L/|x|
     只有当q *L^2 (better than CBC) 远小于 x的时候才会使得CTR是安全的，
-    在现实生活中q是我们使用密钥k来对明文加密的次数，x就是密文空间，l是明文中的最大的长度
+    在现实生活中q是我们使用密钥k来对明文加密的次数，x就是密钥空间，l是明文中的最大的长度
     
     
 
+比较                      CBC 和 CRR
 
+use                      PRP     PRF  一个有返回的函数一个没有逆
+   
+并行处理                    NO     YES
 
+security 
+of random             CBC所需要的密钥空间要大于CRT所需的密文空间 ，能够使用一个密钥来加密更多的块
+encrytption
 
+dummy padding block     需要         不需要，‘
+
+拓展   1byte mesgs       16x         no expansion
+
+   
+ Summary 
+ 
+ PRPs and PRFs：a useful abstraciton of block ciphers
+ 
+ we examined two security notions:(security against eavesdropping)
+   1.semantic security against one-time CPA   CTR
+   2.semantic security many-time CPA          CBC
+   
+   note：但是CBC和CTR不能保证数据完整性（integrity and confidentiality）later
+   
    
    
    
