@@ -240,7 +240,7 @@ analyse CPA-security in cbc:
                
      solution：1.
          nonce-based CBC
-         Cipher Blockchain with unique nonce
+         Cipher Blockchain with unique nonce IV= E（k1,nonce）
          使用一个（k1，k）的密钥对来分别加密 IV 和明文块，让其变得不可预测,使得密文的长度等于明文的长度，IV并不经过传输
          
       void AES_cbc_encrypt(
