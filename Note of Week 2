@@ -264,6 +264,7 @@ analyse CPA-security in cbc:
       F(k,IV)   F(k,IV1)   F(k,IV2)   F(k,IV3)    ........
 
 IV      C0         C1          C2        C3
+但是必须选择一个新的IV对于一个新的message
 
 是并行处理，如果有三个AES engins ，那么处理的速度是三倍，并不是和CBC一样是按顺序处理
 
@@ -272,13 +273,16 @@ IV      C0         C1          C2        C3
                                       64位的nonce-----64位的counter
 所以加密的块不能超过2^64 个块，不然他们可能会遇到相同的key
 
-if F is a secure PRP over(k,x) then
+if F is a secure PRP over(k,x，x) then
+  E_ctr is a semantic security usder CPA  over(k,X^l,X^L+1)
   
-  
-  In particular, there is a q-quaries adversary A attacking E_ctr
+  In particular, there is a q-quaries adversary A attacking E_ctr----->映射现实生活中的加密者对于明文的加密次数
   there exists a PRP adversary B s,t:
-    Adv_CTR[A,E]<=2*Adv_PRP[B,E]+2*q * L^2/|x|
-    只有当q *L^2 远小于x的时候才会使得CBC是安全的，在现实生活中q是我们使用密钥k来对明文加密的次数，x就是密文空间，l是分组的长度
+    Adv_CTR[A,E]<=2*Adv_PRP[B,E]+2* q^2 * L/|x|
+    只有当q *L^2 (better than CBC) 远小于 x的时候才会使得CTR是安全的，
+    在现实生活中q是我们使用密钥k来对明文加密的次数，x就是密文空间，l是明文中的最大的长度
+    
+    
 
 
 
