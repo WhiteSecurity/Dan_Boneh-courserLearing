@@ -1,0 +1,72 @@
+Message integrity
+
+goal: integrity  ,no condidentiality
+
+  Examples: 
+     -Protecting  public binaries on disk 保护公共文件的完整性
+     -Protecting banner ads on web pages 保护在广告页面上的标语
+     
+   The basic mechanism is called MAC
+    a message authentication code,  MAC
+    
+    当通信双方进行通信的时候，通过在message后面添加一个tag标签的方法来是接受放能够认证信息的数据完整性
+    
+    MAC包含两个算法，一个是产生一个标签，第二个是验证标签的正确性和信息的完整性,并且输出yes or no
+    DEF： MAC i=(S,V) defined over (K,M,T)is a paie of algs:
+      -S(k,m) outputs t is in T
+      -V(k, m, t=S(k,m))  ,outputs yes or no
+  
+  
+    如果采用一个没有secret key 的方法，比如CRC: cyclic redundancy check 循环冗余查询，产生一个tag的
+  方法来完整性的验证，攻击者可以轻易的blcok the message and tag,并且修改原数据and 重新生成特定的tag
+  如果我们引入一个密钥的话，attack就做不到一些alice能够做的事情了。
+  
+   怎么定义一个安全的MACs
+     Attackers's power :chosen message attack 
+       for m1.m2.....mq attack is given ti  <- S(k,mi)
+       换句话说就是攻击者能够选择特定的明文给ALICE，而ALICE能够对特定的明文产生特定的标签tag，
+       
+     Attack's goal:existential forgery
+      * produce some new valid message/tag pair(m,t).
+            (m,t) 不属于 {(m1,t1),...,(mq,tq)}
+     攻击者有能力选择特定的message进行攻击，攻击者的目标是能够产生 一对合法的新的 m 和tag t
+     
+     我们定义安全的MAC
+        1.是想要攻击者不能够为一个新的message产生合法的tag
+        2.我们不能够为一个相同的message找到另一个tag
+        
+                     m1,m2,m3......,mq
+                    <--------------------
+        challenger    t1,t2,t3......,tq         Adv
+                    --------------------->
+                             (m,t)
+                  <---------------------------
+     
+     b=1 if V(k,m,t)='yes'  and (m1,t1),....(mq,tq)
+     b=0 otherwise
+     
+     我们定义 攻击者能够攻破的概率是可忽略的
+        Adv_mac[A,l]= Pr[Chal.outputs 1]= negligible     
+     
+     
+     在现实生活中，1.tag所产生的lenfth需要足够的长，64 ，96，126，
+                 2.不存在两个不同的message在相同的密钥下产生相同的tag
+     
+     
+     Example: protecting system files
+      suppose at install time the sustem computes:
+       
+       F1         F2          F3 ........
+      (F1,t1)    (F2,t2)    (F3,t3)
+        电脑会把所有的文件和文件所关联的tag保存起来，当攻击者无法攻破一个安全的MACs的时候，攻击者不能够恶意的创建文件在操作系统中
+        但是会有可能对文件地址进行交换，来造成某种程度的破坏（所有的对文件的改变都会被一个安全的MAC所检测到）
+        
+   
+     
+     
+     
+     
+     
+     
+     
+       
