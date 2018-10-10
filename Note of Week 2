@@ -309,7 +309,8 @@ dummy padding block     需要         不需要，‘
    
    note：但是CBC和CTR不能保证数据完整性（integrity and confidentiality）later
    
-   
+   在CBC中，一个密文块在传输的时候收到影响，在解密的时候只会影响到之后的两个块
+   在CRC中，一个密文块在传输的时候受到影响，只会影响到当前的块
    
    
    
