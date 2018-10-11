@@ -63,17 +63,59 @@ goal: integrity  ,no condidentiality
         
    
 -------------------------------------------------------------------------------------------
-MAC有一个生成算法                 和           一个验证算法
-    signing alg. S(k,m)--->t  and        V(k,m,t)----->0,1
-  Attack's power:
+review： MAC有一个生成算法                 和           一个验证算法
+      signing alg. S(k,m)--->t  and        V(k,m,t)----->0,1
+      Attack's power:
+      攻击者具有 选择明文攻击的能力，攻击者可以选择q个m块发送给challenger，挑战者会返回特定的tag给攻击者
    
+       攻击者的目标是：能够产生一个新的合法的明文/tag 对
    
    
    MAC是基于PRF
-     
-     
-     
-     
-     
-     
-       
+      Secure PRF =》Secure MAC
+          for a pRF: F:k x X -> Y define a MAC I_F=(S,V) as:
+          - S(k,m) :=F(k,m)
+          - V(k,m,t): output 'yes' if t=F(k,m) and 'no' otherwise
+   怎么定义一个安全的MAC
+   Thm: If F:K x X-->Y is a secure PRF and 1/|Y| is negligible.  
+      |Y| is large the I_F is a secure MAc
+      
+        ADV_MAC[A,I_f]<=Adv_PRF[B,F] +1/|Y|
+        
+    =>I_f is secure as long as |Y| is large, say |Y|=2^80
+    
+                       m1
+              <   -------------
+     chal         --------------->                        ADV
+                      t1
+          <--------------------------------
+                 (m,t)
+                 
+                 
+  MAin question:
+      how to convert Small-MAC into a Big-MAC
+  
+  Two main constructions used in practice:
+     -CBC-MAC bank industry --ANSI x9.9 ,FIPS 186-3
+     -NMAC                     SSL 
+                 
+ 
+ 
+ CBC-MAC 
+ 
+   
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
