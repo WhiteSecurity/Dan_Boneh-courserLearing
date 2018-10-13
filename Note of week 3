@@ -103,19 +103,111 @@ review： MAC有一个生成算法                 和           一个验证算
  
  CBC-MAC 
  
+ recall: secure PRF F => secure MAC. as long as |Y| is large 
+           S(k,m) = F(k,m)
+   our goal:        
+ given a PRF for short message(AES)
+ 
+ construct a PRF for long messages,使得（一个大数据）能够通过一个MAC算法产生tag
+ 
    
+     From here on let X={0,1}^n  (e.g. n=128)   
+       m[0]         m[1]           m[2] 
+        |     ___xor_|     ____xor_|                  raw CBC is not a secure mac unless addding the final step
+        |    |       |     |       |
+      F(k,)--      F(k,)---      F(k,) -------
+                                              |
+                                          F(k1,)-->tag 只有加了这个步骤CBCmac 才是一个安全的mac算法
+                                          
+                                         
+         把一个非常长的message转换成非常多的块，我们能把任意长度的message作为输入，message的长度小于block的个数
+   
+   Why the last encryption step in ECBC-MAC
+      suppose we define a MAC I_RAW=(s,V),where 
+           S(k,m)= rawCBC(k,m)
+              The I_RAW is easily broken by a 1-chosen mas attack
+              
+      poor attack can't forge the tag because of he can't know the key k
+      but if a smart attacker works as follow:
+         1. choose an arbitrary one-block messge m属于X
+         2.request tag for m Get t=F(k,m)
+         3.output t as MAC forgery for the 2-block message
+         
+        RawCBC(k,(m,t xor m))= F(k,F(k,m) xor (t xor m)) =F(k,t xor (t xor m))=F(k,m)
+     
+        所以明文m 和 （m, m xor t），攻击者可以伪造一个相同的tag对于不相同的来个message
+        
+        
+      
+      
+      
+      
+      
+   
+   
+         
+                
+   NMAC(nested mac) 嵌套的mac
+   
+   m[0]   m[1]   m[2].....so on and so forth
+    |       |      |
+    |       |      |                         cascade is not secure，因为只要攻击者对NMAC做了一次选择明文攻击，那么
+k---F-------F------F--t->t||fpad                攻击者就能仿造出一个伪mac,因为F不需要一个保密的密钥k，来进行加密仅仅是把输入作为密钥
+                           |             cascade--->cascade(k,m)---->cascade(k,m||w) for any w
+                           |
+                       k1->F     cascade加了k1 才会是安全的
+                           |
+                          tag
+                          
+                          
                  
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
-                 
+    ECBC-MAC and NMAC analysis         
+
+Theorem: For any L>0
+            For every eff. q-query PRF adv.A attacking F_ECBC or F NMAc
+            there exists an eff. adversary B s.t.:
+            
+            Adv_PRF[A,F_ECBC]<=Adv_PRP[B,F] + 2q^2/|x|
+            Adv_PRF[A,F_NMAC]<=q*Adv_PRF[B,F] +q^2/2|k|
+            
+            q可以映射成在实际上生活中，用同一个k加密的次数，
+            当q远小于根号下x的时候，CBC-MAC是安全的
+            只要当q远小于根号下k的时候，NMAC也是安全的，在基于AES-128的情况下，k=2^64
+            
+ 所以当issue 根号x下的ECBC-mac和根号k下的NMAC signing之后，MAC将变得不安全
+   cute attack:
+       1.after issuing |Y|根号下的质询之后，对于一个随机message x，或者一个（mi，ti）
+       2.find 一个t_u=t_v的碰撞，在u不等于v的情况下
+       3.choose 一个w 生成一个对于（u||W）的tag，又对V选择一个W生成一个tag，那么tag（w||v）=tag(w||u)
+       我们就找到对于两个不同的message存在相同的两个tag。
+            
+            
+      ECBE-MAC和 NMAC的比较
+         ECBE-MAC 普遍是基于AES，
+          *  CCM encryption mode 
+          *  Nist standard called CMAC
+          
+       NMAC not ussally used with AES or 3DES
+          Main reason: need to change AES key on every block requires re-computing AES-key 
+            
+            
+       但是NMAC普遍应用与HMAC中，
+       
+       the construdtion of HMAC
+            
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
                  
                  
