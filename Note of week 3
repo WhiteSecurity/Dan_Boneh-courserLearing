@@ -135,7 +135,8 @@ review： MAC有一个生成算法                 和           一个验证算
          
         RawCBC(k,(m,t xor m))= F(k,F(k,m) xor (t xor m)) =F(k,t xor (t xor m))=F(k,m)
      
-        所以明文m 和 （m, m xor t），攻击者可以伪造一个相同的tag对于不相同的来个message
+        所以message m 和 message block（m, m xor t）所产生的两个tag是相等的，
+             攻击者可以伪造一个相同的tag对于不相同的来个message
         
         
       
@@ -194,15 +195,36 @@ Theorem: For any L>0
        但是NMAC普遍应用与HMAC中，
        
        the construdtion of HMAC
+       
+       however,what to do when the message lenght is not a multiple of block size.
+       
+       by using the mac-padding
+       
+       bad idea: pad m with 0, but the adversary can easily break the mechanism。
+                                  m     000
+                                  m||0   00   会存在两个不相等的message 的tag可能是相等的
+                                  
+       CBC mac padding
+         For security,padding must be invertible!
+              m0 != m1==> padding(m0) != padding(m1)
+        ISO: padding 1000.。。，最后再加上一个dummy block ，来保证padding function是不可逆的
+        
+        Cmac -nist
+          使用 （k,k1,k2）来分别对最后的一步进行 有效的 PRF
+         F(k,*)
             
-            
+m0        m1......mw100                     m0        m1......mw
+ |         |       |                         |         |       |
+ |     __ xor    _ xor---k1                  |     __ xor    _ xor---k2
+F(k,)  |   |     | |                        F(k,)  |   |     | |
+ |_____|   |     |F(k,)                      |_____|   |     |F(k,) 
+         F(k,)   | |                                   F(k,)   | |
+           |_____| tag                                  |_____| tag
 
-
-
-
-
-
-
+k1和k2 是k通过一个PRG所产生的，如果message需要一个padding那么,就选择k1对消息进行异或
+ 
+                            如果message不需要一个padding那么,就选择k2对消息进行异或
+          
 
 
 
