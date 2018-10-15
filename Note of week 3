@@ -226,7 +226,55 @@ k1和k2 是k通过一个PRG所产生的，如果message需要一个padding那么
                             如果message不需要一个padding那么,就选择k2对消息进行异或
           
 
+---------------------------------------------------------------------------------------------------------
 
+  但是 ECBC-MAC和 NMAC都是sequence 按照顺序来的mac，不能够同时并行处理 message block的操作
+  construction 3: paraller MAC
+  
+     m[0]    m[1]    m[2]......m[t]
+      |       |       |         |
+     xor     xor     xor       xor
+      |       |       |         |
+   p[k,0]   p[k,1]  p[k,2].....p[k,t]  密钥K包括(k,k1),最后的padding是类似与CMAC
+      |       |       |         |
+   F(k1,)    F(k1,)  F(k1,).....|
+      |_ __ __|_______|_________|
+             xor
+              |
+           F(k1,)-->tag
+           
+           如果我们标志 序号 的p去掉的话，攻击者如果交换两个message block 的顺序的时候，最后的tag将不会发生改变。
+           
+   PMAV  
+         ADV[A,F_pmac]<=ADV_PRF[B,F]+2*q^2*L^2/|x|,只有当 ql << x^1/2,Pmac才是安全的。
+         
+         PMAC能够快速的改变 tag 当，其中的 message block 发生改变的时候。for example.当m0变成m0‘的时候
+          如何快速的改变tag
+          我们首先假设 F 是一个可逆的PRP
+            F^(-1)(k1,tag) xor F(k1, m[0] xor P[k1]) xor F(k1, m[0'] xor P[k1])
+            
+         one-time MAC is like to one-time pad that no adversary can break the mechainsm and faster than  PRE-based  MACs
+         
+         当一次MAC 变成 many times mac的时候，
+          有一个efficient 方法 
+              Carter-Wegman MAC: CW((k1,k2),m) = (r,F(k1,r) xor S(k2,m)),F是slow 但是short input
+                                                                         S是fast 但是long inp
+                                 RUN V(k2,m,F(k1, r) xor t) 
+                                 tag生成过程和 tag验证过程
+             Thm: if (S,v) is a secure one-time Mac and F a secure PRF then CW is a secure 
+              MAC outputting atags in {0,1}^2n
+         
+        
+           
+           
+  
+  
+  
+  
+  
+  
+  
+      
 
 
 
