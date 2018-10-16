@@ -265,11 +265,87 @@ k1和k2 是k通过一个PRG所产生的，如果message需要一个padding那么
               MAC outputting atags in {0,1}^2n
          
         
+  Collison resistance 
+      hash function 的 birthday attack，
+         Let H: M-->{0,1}^n be a hash function (|M|>>2^n|)
+         
+          Generic alg. to find a collision in time O(2^n/2) hashes
+            algorithm:
+               1.choose 2^n/2 random messages in M: m1,....,m2^n/2 (distinct)
+               2.For i=1,....,2^n/2 compute t_i=H(m_i) 属于 {0,1}^n
+               3.Look for a collision (ti=t_j) If not found,go back to step 1.
+               
            
-           
+  生日悖论： 从集合中随机抽取数量n等于集合中数量 的根号 1/2*1.2的时候，两个出现相等的概率大于1/2
   
-  
-  
+  所以存在一个Generic 攻击：
+     H:M-> {0,1}^n, collision finding algorithm:
+        1.choose 2^n/2 random elements in M:  m1,...m2 
+        2. for i=1,...2^(n/2) compute ti=H(mi) 属于{0,1}^n
+        3.Look for a collision ti=tj, if not found, go back to step 1.
+         可能出现的iteration（反复循环）是两次
+         
+         
+     因为hash function 必然存在碰撞，所以我们的目标是 collision-resistant(C.R) hash functions
+     
+     Step 1: give a collision resistant for short message
+         and extnd it to the much more longer message
+         
+         Merkle-Gamgard inerated construction: elegant 范式
+           m0   m1  m2  m3||PB  
+           |    |   |      |
+    IV->   h->  h-> h->    h--->H(m)
+     Given h: T*X -->T    compression function
+        we obtain H:x--> T   H_i - chaining vatiables
+        
+        padiing block : 10000|| megalen ,if no space for padding ,add a dummy block
+        
+  Thm: if h is  collision resistant then so is H.
+     Proof: collision on H=> collison on h
+       suppose H(M)=H(M') . We build collsion for h.
+         使用反证法，首先假设存在两个不同的M的hash值相同，我们要证明 h也存在碰撞
+           Iv =H0,  H1,..., Ht, H_t+1 =H(M)
+            Iv =H0',  H1',..., Ht', H_t+1' =H(M')
+        
+        首先我们要证明
+           h(H_t, M_t||PB)=H_t+1=H_t+1'=  h(H_t', M_t'||PB')
+       所以我们要找到碰撞的话：    ==>H_t ！= H_t' or
+                               ==>M_t ！= M_t' or
+                              ==>PB ! = PB'
+        
+        
+        因为M_t' != M_t 和条件不符，我们要证明的话，必须要H_t ！= H_t'
+         h(H_t-1, M_t-1)=H_t=H_t'=  h(H_t-1', M_t-1')
+        所以我们要证明；H_t-1= H_t-1'
+                M_t = M_t'，M_t-1 = M_t-1'
+                
+        所以我们要找到 h的 碰撞或者 M_t = M_t'，与条件不符合，所以不能对于 这个找到它的碰撞
+        
+    contructing Compression Functions h
+        h collsion resisitant => H collision resistant 
+          Goal ; construct compression function h:T x X ->T
+            
+    The Davies-Meyer compression function : h(H,m)=E(m,H) xor H
+       The: suppose E is an ideal cipher (collection of |K| random perms)
+      如果我们不加入 xor H,我们尝试O(2^n/2) 就很容易Finding a collision h(H,m)=h(H',m')
+         
+         m_i----->
+                 
+                 |--> E-----xor H_i---->H_i+1
+                  
+         H_i----->
+       
+       E(m,H) 输出，在用 m' 来解密，之后我们再用 E（m', H'）
+        ===>  H'=D(m',E(m,H))
+        
+        
+        
+        
+        
+        
+        
+     
+     
   
   
   
