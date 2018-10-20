@@ -353,15 +353,75 @@ k1和k2 是k通过一个PRG所产生的，如果message需要一个padding那么
         1.S(k,m)=H(k||m)
           this MAC is insecure because: 如果你使用这个方法输出一个哈希值，那么攻击者可以利用这个输出的hash值
           作为下个值的输入 ，链接 上 padding block 再链接上 一个任意的m,创造一个伪造的tag
+     m0    m1    m2     m3||PB
+     |     |     |         |
+IV-->h--->h---->h--------->h----->H(m)     
+  
+  for H(k||m) and compute H(k||m||PB||w) for any w
+  
+  Standardized method:HMAC (Hash-MAC)
+     most widely used MAC on the internet
+ k xor ipad  m0    m1       m2||PB   
+     |       |      |         |
+IV-->h--->   h----> h--------->h--|     
+                                  |
+                           ________            
+ k xor opad               |
+     |           h ------ h----->
+IV(fix)----------|
+
+  main idea: main difference : the two keys k1 and k2 are dependent
+  
+  
+  HMAC is assumed to be secure PRF
+    Can be proven under certain PRF assumptions about h(..,.)
+    Security bounds similar to NMAC
+      -Need q^2/|T| to be negligible (q<<|T|^1/2)
+        in TLS: must support Hmac-SHA1-96
+  
+  
+  Warning :verification timing attacks 
+     def Verify(key, msg, sig_bytes):
+           return HMAC(key, msg)==sig_bytes
+                    16 bytes       
+    The problems: '==' implemented as a byte-by-byte comparison
+     * Comparator returns false when inequality found 
+                        m    tag
+                  ---------------------->
+     target msg m        accept or reject       k
+                  《-----------------------
+  
+  Timing attack : to compute tag for target message m do:
+      step 1: Query server with random tag
+      step 2: Loop over all possible first bytes and query server 
+      step 3: repeat for all tag bytes until valid tag found 
+   攻击者不断的对同一个message质询tag，通过和每组时间的对比，找到正确tag
+     
+  Defense #1
+     Make string comparator always take same time
+        return false if sig_bytes has wrong length 
+        result =0
+         forx,y in zip(HMAc(key,msg), sig_bytes):
+           result |=ord(x)^ ord(y)
+         return result ==0
+   can be diffcult to ensure due to optimizing compiler
+     Defense #2
+        deg verify(key,msg,sig_bytes):
+           mac=HMAC(key,msg)
+           return HMAC(key,macd)==HMAC(key,sig_bytes)
+   
+         
+         
+   
+     
+     
+     
      
   
   
   
   
-      
-
-
-
-
+  
+  
                  
                  
