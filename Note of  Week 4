@@ -1,1 +1,19 @@
+Confidentiality : semantic security against a CPA attack
+  Encryption secure against eavesdropping only
+  
+Integrity:
+  Existential unforgeability under chosedn message attack
+  CBC-mac ,Hmac, Pmac , CW-MAC
+  
+  This module: encryotion secure against tampering 
+    Ensuring both confidentiality integrity
+联合保密性和数据完整性来对数据进行保护
 
+攻击者能够进入网络 traffic 实施 tampering attacks
+   TCP/IP
+   使用一个高度抽象的TCP/IP协议来介绍攻击对数据的攻击
+   
+                                    
+                                                  |——————————
+   user                      server（TCP/IP stack）|
+                                                  |——————————
