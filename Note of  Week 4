@@ -14,6 +14,42 @@ Integrity:
    使用一个高度抽象的TCP/IP协议来介绍攻击对数据的攻击
    
                                     
-                                                  |——————————
-   user                      server（TCP/IP stack）|
-                                                  |——————————
+                                                                   |——————————   port 80 /www
+   user  ---》 dest=xx||data and encrypt by k server（TCP/IP stack）|
+                                                                   |——————————   port 25/bob
+         IV，E(dest=xx||data)                                         
+   1. 有客户端和 服务器端，user端向server发送服务信息,如果bob是攻击者·，并且能够截断从客户端到服务器端的加密数据的话，
+    bob只要改变发送的地址，就能让服务器来解密数据并且发送给bob，如果是用CBC来进行流密码加密的话，bob就能够对 之前的IV进行修改
+    IV‘=IV xor (...80...) xor (..25..)
+    
+   2.只需要攻击者利用 network traffic,不需要对解密服务器进行解密
+   远程终端app
+         remote terminal app: each keystroke encrypted with CTR mode(counte )
+                
+                IP her||TCP hdr || T(16 bit TCP checksum) || D (1 byte key stroke)
+            ------------------------------------------------------------------------>
+        K                                                                                  server
+                for all t,s send: IP her||TCP hdr || T xor t || D xor s                                                                       
+            ------------------------------------------------------------------------>
+            <------------------------------------------------------------------------
+                 ACK if valid checksum, nothing otherwise
+            
+            如果checksum是错的，那么服务器就会忽视并且抛弃，checksum（tcp header，D）=t xor checksum(hdr,D xor s)=>
+            can find D
+            使用choose cipher attack ，来不断的得到相应的明文，try all t and s
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
