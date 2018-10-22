@@ -40,7 +40,14 @@ Integrity:
             
             
             
-            
+         The lesson:
+          CPA security cannot guarantee secrecy under active attack
+          
+          only use one of two modes:
+           If message need integrity but no confidentiality
+           use a mac
+           if message needs both integrity and confidentiality:
+             use authenticated encryption modes
             
             
             
