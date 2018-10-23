@@ -49,12 +49,107 @@ Integrity:
            if message needs both integrity and confidentiality:
              use authenticated encryption modes
             
+ =====================================================================
+ defination:
+      as usual:  E: k x m x N(nonce) --> C
+                 D: k x C x N(nonce) --> M x {T} 这个T是一个独立的部分能够告诉解密者，有没有必要进行解密还是直接忽略
             
             
+         Security: the system must provide
+           sem.security under cpa attack, and  ciphertext integrity
+           
+           attackers can't not creat new ciphertext that decrypt properly
+           
+        ciphertext integrity
+                     m1属于M,      m2,m3,....m_q
+                   <-------------------------------------
+        challenger   C_1,......C_q                        Adversary
+                   ------------------------------------->
+                       c
+                  <--------------------------------------
             
-            
-            
-            
+        如果adversay创造了一个合法的C，那么，攻击者就能够获胜
+        
+        所以我们定义对于有效攻击者A 密文完整性是对有有效的攻击者A，能够有概率对于挑战者能够输出1
+        的概率是可忽略的
+           ADV_c[A,E]=Pr[Chal output=1] is negligible
+           
+           Implication: authenticity
+           Attacker cannot  fool Bob into thinking a message was sent from Alice
+                     m0,m1,......m_q
+                 <------------------------------                   C
+           Alice                                attacker -------------------------->Bob
+                 ------------------------------>        Cannot creat valid c 不属于{c_1,C_2,....c_q}
+                     c_i=E(k,m_i)
+           
+           attack want to creat new c don't belong to alice to bob
+         
+         -------------------------------------------------------------------------------------------  
+           choose ciphertext attack
+            the power of adversary:both cpa and cca
+              can obtain the encryption of arbitrary messages of his choise（但不是所有的密文）攻击者欺骗服务器能够解密攻击者想要解密c
+              can decrypt any ciphertext of his choice, other than challenge
+                模拟现实生活中攻击者的能力
+                
+                供给者的目的： break sematic security
+                
+        chosen ciphertext security :defination
+           
+                       chal.    |  for i=1,2,..q                    |
+                                | (1)cpa query:                     |
+                       k<-----K |     m0,m1                         |
+           challenger           |   <---------                      |            adversary
+                                |     ---------->                   |         
+                                |          ci                       |
+                                | -------------------------         |
+                                |  (2) cca query                    |
+                                |  攻击者从密闻中选择他想要解密的密文之后chall返回解密的密文发送给adv|
+                                |                                   |
+                                |                                   |
+               
+           
+           
+           
+           所以我们定义CCA security是一个‘efficient’A,ADV[A,E]=|Pr[EXP(0)=1]-Pr[EXP(1)=1]| is negligible
+           
+           EXample:CBC with random IV is not CCA-security
+        
+                           m0,m1
+     challenger            <------                     adversary
+                          ( V||ci)
+                           ------> 
+                           
+                      ( V xor 1 ||ci)
+                          <------   
+                       ( m_b xor 1)
+                         ------->
+     攻击者就能够轻易攻破 CBC with ran IV
+     
+     THm:let (E,D) be a cipher that provides AE(Authenticated encryption)
+        then(E<D) is cca secure!
+        
+        in particular,for any 1-query eff.A exist eff.B1,B2,s,t
+           Adv_CCA[A,E]<= 2q*Adv_Ci[B_i,E]+Adv_CPA[B_2,E]
+                       cipher text integrity  and cpa security==> choose cipher attck secure
+           
+           
+           因为AE具有 cipher integrity,所以攻击者不能够选择任意的cipher让chall来解密，所以只要是约等于就是CPA安全
+           又因为AE具有CPA安全，所以AE是CCA安全的。
+           
+           Authenticated encryption:
+              ensure confidentiality against an cative adversary that can decrypt some ciphertexts
+              
+              Limitations:
+                 does not prevent replay attacks 
+                 does not account for side channels(timing)
+           
+           
+           
+           
+           
+           
+           
+           
             
             
             
