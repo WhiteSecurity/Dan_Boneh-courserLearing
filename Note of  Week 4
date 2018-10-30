@@ -143,15 +143,51 @@ Integrity:
                  does not prevent replay attacks 
                  does not account for side channels(timing)
            
+ -------------------------------------------------------------------------------------------------------------
+ MACs机制仅仅是为了数据的完整性，而不能保证数据的保密性
+ Constructions from ciphers and MACs
            
+    Auhenticated Encryption(AE): introduce in 2000      
            
+           Let(E,D) be CPA secure cipher and (S,V) secure MAC,
+              Then 
+               1.Encrypt-then-MAC: always provides A.E.
+               2.MAC-then-encrypt: may be insecre against CCA attacks
+          however:when (E,D) is rand-CTR mode or rand-CBC M-then
+           however: 当加密和解密算法 是ran-CTR mode 或者是 rand-CBC ,MAC之后在加密提供了 A.E. 安全
            
+           但是对于 rand-CTR-mode,one time MAC is sufficient
            
+       Standards:
+           GCM: CTR mode encryption then CW-MAC
+               (accelerated via Intel's PCLMULQDQ instruction)
+           CCM: CBC-MAC then CTR mode encryption
+           EAX: CTR mode encryption then CMAC
            
-           
-           
+ TLS: 在TLS 协议中，用户和服务器之前传递信息，有  
+                     
+                     HDR--TLS record（数据最多是16kb，会分块进行加密传输）            
+   user         -------------------------> sever
+     K_b->s,K_s->b                             K_b->s,K_s->b  
+     
+         Unidirectional keys: K_b->s,K_s->b  
+         首先通过密钥交换协议，用户端和服务器端之间会产生一对单向的密钥对，一个是服务器端进行加解密的，一个是客户端进行加解密的
+         Stateful encryption:
+            Each side maintains two 64-bit countersL: ctr_b->s,ctr_s_>b
+            Init. to 0 when session started.  ctr++ for every record.
+            purpose: replay defense(如果攻击者复制密文进行重放，那么攻击将会无效)
             
-            
-            
+    HDR(type of the packet ||version number for the protocol|| the length of the packet)|| data ||tag||pad
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
             
             
