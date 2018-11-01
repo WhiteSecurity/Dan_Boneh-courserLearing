@@ -172,14 +172,66 @@ Integrity:
      
          Unidirectional keys: K_b->s,K_s->b  
          首先通过密钥交换协议，用户端和服务器端之间会产生一对单向的密钥对，一个是服务器端进行加解密的，一个是客户端进行加解密的
+         。单向的Key具有两个不同的key，一个加密key，一个产生MAC的key，所以一共有四个key
+         
+         在客户端进行加密
+         在服务器端进行解密
+         
          Stateful encryption:
             Each side maintains two 64-bit countersL: ctr_b->s,ctr_s_>b
             Init. to 0 when session started.  ctr++ for every record.
             purpose: replay defense(如果攻击者复制密文进行重放，那么攻击将会无效)
             
-    HDR(type of the packet ||version number for the protocol|| the length of the packet)|| data ||tag||pad
-     
+    HDR(type of the packet ||version number for the protocol|| the length of the packet)|| data ||tag||pad）
+    加密使用AES CBC，MAC使用
+   1.首先使用MAC产生一个tag，tag<-S(k_mac,[++ctr_b->s||header||data])
+         mac then encrypt 
+   2.pad[header||pad||tag] to AES block tag
+   3.CBC encrypt with k_enc and new random IV
+   4.prepend header [++ctr_b->s|| header|| data]
+    send bad_record_mac if in valid 
   
+   
+   服务器进行解密：
+     server side:  dec(k_b->s, record, ctr_b->s)
+       step 1: CBC decrypt record using k_enc
+       step 2:check pad format: send bad_record_mac if invalid 
+       step 3:check tag on[++ctr_b->s||header||data]
+       
+       Provide authentication encryption :
+       (provide no other information is leaked during decrypotion)
+  
+    加密使用AES CBC，MAC使用
+    
+    面对TLS1.1,我们有两个不同的攻击方式，
+      IV for CBC can be predicted,
+      orcal padding：
+        判断pad的错误和正确通过 timing 计时器
+        
+        attack has the ciphertext c[0],c[1],c[2] and it wants m[1]
+        
+         c0   c1
+         |    |      攻击者猜测一个g是他的合法的byte，异或上一个 0x01，
+         |__| |     
+        D() |D()
+ IV--xor-|  _ |      最后现实的真正的 byte xor  g xor 0x01,如果显示是0x01那么，g就被猜测正确，so and so forth
+        m0    m1      到最后一个byte为止，g要被使用2^16,
+        
+        
+LEsson:
+           encrypt than mac  would completely avoid the problem :
+           MAc is check first and ciphertext is discard id invalid 
+         
+         MAc-then-CBC encrypt provides A,E,but padding orcle is destorying it,
+         
+         
+         Attacking non-atomic decryption:
+            SSH
+       HDR(type of the packet ||version number for the protocol|| the length of the packet)|| data ||tag||pad
+       the length of the packet，攻击者通过不断的querry 从而获得正确的 the length of the packet，导致不正确
+       way: 不把他和packet of length 放在加密中，而仅仅是公开的方法 MAC环节中。
+    
+   
   唯密文攻击：只知道密文，也就是，那只能通过统计特性分析其中有什么规律了已知明文攻击：得到了一些给定的明文和对应的密文，在这里可以是的任意非空子集。
   选择明文攻击：除了上面的基础，攻击者还可以任意创造一条明文比如“Excited”，并得到其加密后的密文。比如用一定的手段渗透Sharon的系统，但是不能直接攻破秘钥，于是只能以她的身份发“Excited”，然后用抓包或者别的方法得到她发送出来的加密的消息。
   选择密文攻击：除了已知明文攻击的基础，攻击者还可以任意制造或者选择一些密文，并得到其解密后的明文。比如用一定的手段在通信过程中伪造消息替换真实消息，然后窃取Sharon获得并解密的结果，有可能正好发现随手伪造的密文解密结果是有意义的，比如naive。
