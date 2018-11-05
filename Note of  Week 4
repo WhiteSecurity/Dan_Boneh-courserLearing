@@ -239,9 +239,49 @@ LEsson:
 
    
      
-     
-     
-     
+ Key Derivation
+                                  
+     How to deriving mangy keys from one
+         Typocal scenario. a single source key is samoled from:
+            Hardware random number generator
+            a key exchange protocol (discussed later)
+            
+     need many keys to secure session :
+        unidirectional keys; multiple keys for nonce-based CBC
+          
+            Goal: generate many keys from this one source key
+
+1.F: a PRF with key space K and outputs in{0,1}^n
+  Suppose source key SK is uniform in K
+  * Define Key Derivation Function(KDF) as:
+     KDF(SK, CTX, L);=
+            F(sk,(CTX||0))|| F(sk,(CTX||1))||......|| F(sk,(CTX||L))
+   CTX : a string that uniquely identifeis the application
+   
+   What if source key is not unifrom?
+      Recall: RPFs are pseudo random only when key is uniform in K
+      
+      Source key often not uniformly random:
+        
+         *Key exchange protocol : key uniform in some subset of K
+         * Hardware RNG: may produce biased output
+   
+  implements the extract-then-expand paradigm:
+      extract : use k<------HMAC(salt,SK)
+      
+      Then expand using HMAC as a PRF with key k
+      
+   
+   2.怎么在加密的数据库中来寻找自己的所需要的信息
+   
+   
+   
+   
+   
+
+
+
+
      
      
      
